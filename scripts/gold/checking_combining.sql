@@ -1,6 +1,9 @@
 SELECT DISTINCT 
 	ci.cst_gndr,
-	ca.gen
+	ca.gen,
+	CASE WHEN ci.cst_gndr != 'n/a' THEN ci.cst_gndr
+		 ELSE COALESCE(ca.gen, 'n/a')
+	END AS ngen
 FROM silver.crm_cust_info AS ci
 LEFT JOIN silver.erp_cust_az12 AS ca
 ON 		  ci.cst_key = ca.cid
